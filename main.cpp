@@ -24,7 +24,8 @@ struct Pair
 };
 
 template <class Type>
-class Increment {
+class Increment
+{
     Type i;
 public:
     Increment(int num = 1) : i(num) { }
@@ -38,6 +39,7 @@ class Array
     Type *arr;
 public:
     Array(int len, Type value = 97); // parametrul default este 97 pentru ca atunci cand este folosit tipul char sa se afiseze litera 'a'
+    ~Array(){delete[] arr;}
     int Len() const;
     Array<Type> operator=(Array A);
     Array(const Array& A);
