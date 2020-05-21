@@ -107,9 +107,9 @@ Array<Type>::Array(const Array& A)
 {
     delete[] arr;
     n = A.n;
-    arr = new Type[n];
     try
     {
+        arr = new Type[n];
         for(int i = 0; i < n; i++)
             arr[i] = A.arr[i];
     }
@@ -204,9 +204,9 @@ int main()
     c = a + b;
     cout << c << " (Redefinirea operatorului '+')\n";
     cout << a.Len() << " (Lungimea lui 'a')\n";
-    cout << a[1] << " (a[1] (read) )\n";
+    cout << a[1] << " (a[1] (redefinirea operatorului [] -> read) )\n";
     a[1] = 12;
-    cout << a << " (Array-ul 'a' dupa modificarea elementului de pe a doua pozitie, adica a[1] (write) )\n";
+    cout << a << " (Array-ul 'a' dupa modificarea elementului de pe a doua pozitie, adica a[1] (redefinirea operatorului [] -> write) )\n";
     Increment<int> inc(2);
     a.Transform(inc);
     cout << a << " (Array-ul 'a' dupa ce fiecare element al lui a fost incrementat cu 2)";
