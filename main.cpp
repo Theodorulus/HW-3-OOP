@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <cassert>
 
 using namespace std;
 
@@ -43,7 +45,7 @@ public:
     Array operator-(const Array<Type>& A);
     Type& operator[](int i);
     template <class Fct> void Transform(Fct f);
-    template <class U> Array<Pair<Type, U> > Merge(Array<U>& A);
+    template <class U> Array<Pair<Type, U> > Merge(Array<U>& A) const;
     friend istream& operator>>(istream& in, Array& A)
     {
         in >> A.n;
@@ -62,9 +64,17 @@ public:
 template <class Type>
 Array<Type>::Array(int len, Type value) : n(len)
 {
-    arr = new Type[n];
-    for(int i = 0; i < n; i++)
-        arr[i] = value;
+    try
+    {
+        arr = new Type[n];
+        for(int i = 0; i < n; i++)
+            arr[i] = value;
+    }
+    catch (bad_alloc a)
+    {
+        cout << "Allocation Failure\n";
+        exit(EXIT_FAILURE);
+    }
 }
 
 template <class Type>
@@ -78,10 +88,18 @@ Array<Type> Array<Type>::operator=(Array A)
 {
     delete[] arr;
     n = A.n;
-    arr = new Type[n];
-    for(int i = 0; i < n; i++)
-        arr[i] = A.arr[i];
-    return *this;
+    try
+    {
+        arr = new Type[n];
+        for(int i = 0; i < n; i++)
+            arr[i] = A.arr[i];
+        return *this;
+    }
+    catch (bad_alloc a)
+    {
+        cout << "Allocation Failure\n";
+        exit(EXIT_FAILURE);
+    }
 }
 
 template <class Type>
@@ -90,8 +108,16 @@ Array<Type>::Array(const Array& A)
     delete[] arr;
     n = A.n;
     arr = new Type[n];
-    for(int i = 0; i < n; i++)
-        arr[i] = A.arr[i];
+    try
+    {
+        for(int i = 0; i < n; i++)
+            arr[i] = A.arr[i];
+    }
+    catch (bad_alloc a)
+    {
+        cout << "Allocation Failure\n";
+        exit(EXIT_FAILURE);
+    }
 }
 
 template <class Type>
@@ -110,7 +136,7 @@ void Array<Type>::Transform(Fct f)
 
 template <class Type>
 template <class U>
-Array<Pair<Type, U> > Array<Type>::Merge(Array<U>& A)
+Array<Pair<Type, U> > Array<Type>::Merge(Array<U>& A) const
 {
     if(n != A.Len())
     {
@@ -167,7 +193,6 @@ int main()
     Array<Pair<int, double> > result(5, p);
     result = a_int.Merge(a_double);
     cout << result << "(Functionalitatea de combinare a doua array-uri, rezultand un array de perechi si redefinirea operatorului '<<')\n";
-
     Array<int> a(5);
     cout << a << " (Constructor cu 2 parametri, dintre care un parametru default) \n";
     Array<int> b(5, 7);

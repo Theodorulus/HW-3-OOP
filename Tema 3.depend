@@ -1,4 +1,6 @@
 # depslib dependency file v1.0
-1590068610 source:d:\theo\info\laboratoare fac\poo\tema 3\main.cpp
+1590069713 source:d:\theo\info\laboratoare fac\poo\tema 3\main.cpp
 	<iostream>
+	<cstdlib>
+	<cassert>
 
