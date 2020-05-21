@@ -106,7 +106,6 @@ Array<Type> Array<Type>::operator=(Array A)
 template <class Type>
 Array<Type>::Array(const Array& A)
 {
-    delete[] arr;
     n = A.n;
     try
     {
@@ -188,13 +187,6 @@ Array<Type> Array<Type>::operator-(const Array<Type>& A)
 
 int main()
 {
-    Array<int> a_int(5, 1);
-    Array<double> a_double(5, 2.5);
-    Pair<int, double> p;
-    Array<Pair<int, double> > result(5, p);
-    result = a_int.Merge(a_double);
-    cout << result << "(Functionalitatea de combinare a doua array-uri, rezultand un array de perechi)\n";
-
     Array<int> a(5);
     cout << a << " (Constructor cu 2 parametri, dintre care un parametru default si redefinirea operatorului '<<') \n\n";
     Array<int> b(5, 7);
@@ -213,5 +205,11 @@ int main()
     a.Transform(inc);
     cout << a << " (Array-ul 'a' dupa ce fiecare element al lui a fost incrementat cu 2)\n\n";
 
+    Array<int> a_int(5, 1);
+    Array<double> a_double(5, 2.5);
+    Pair<int, double> p;
+    Array<Pair<int, double> > result(5, p);
+    result = a_int.Merge(a_double);
+    cout << result << "(Functionalitatea de combinare a doua array-uri, rezultand un array de perechi)\n";
     return 0;
 }
