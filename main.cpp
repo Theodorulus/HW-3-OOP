@@ -21,25 +21,6 @@ struct Pair
     }
 };
 
-/*class Pair1
-{
-
-public:
-    int t, u;
-    Pair1(int x = 0, int y = 0): t(x),u(y){}
-    friend ostream& operator<<(ostream& out, Pair1& P)
-    {
-        out << '(' << P.t << ", " << P.u << ")";
-        return out;
-    }
-    Pair1 operator=(Pair1 P)
-    {
-        t = P.t;
-        u = P.u;
-        return *this;
-    }
-};*/
-
 template <class Type>
 class Increment {
     Type i;
@@ -63,7 +44,6 @@ public:
     Type& operator[](int i);
     template <class Fct> void Transform(Fct f);
     template <class U> Array<Pair<Type, U> > Merge(Array<U>& A);
-//    template <class U> Array<Pair1> Merge(const Array<U>& A);
     friend istream& operator>>(istream& in, Array& A)
     {
         in >> A.n;
@@ -149,27 +129,6 @@ Array<Pair<Type, U> > Array<Type>::Merge(Array<U>& A)
     }
 }
 
-/*template <class Type>
-template <class U>
-Array<Pair1 > Array<Type>::Merge(const Array<U>& A)
-{
-    if(n != A.n)
-    {
-        cout << "Nu se pot combina cele doua Array-uri deoarece au lungimi diferite.";
-    }
-    else
-    {
-        Pair1 p;
-        Array<Pair1 > temp(n, p);
-        for(int i = 0 ;i < n; i++)
-        {
-            temp[i].t = arr[i];
-            temp[i].u = A.arr[i];
-        }
-        return temp;
-    }
-}*/
-
 template <class Type>
 Array<Type> Array<Type>::operator+(const Array<Type>& A)
 {
@@ -202,47 +161,29 @@ Array<Type> Array<Type>::operator-(const Array<Type>& A)
 
 int main()
 {
-    /*Array<int> a(5);
-    Array<int> b(3, 17);
+    Array<int> a_int(5, 1);
+    Array<double> a_double(5, 2.5);
+    Pair<int, double> p;
+    Array<Pair<int, double> > result(5, p);
+    result = a_int.Merge(a_double);
+    cout << result << "(Functionalitatea de combinare a doua array-uri, rezultand un array de perechi si redefinirea operatorului '<<')\n";
+
+    Array<int> a(5);
+    cout << a << " (Constructor cu 2 parametri, dintre care un parametru default) \n";
+    Array<int> b(5, 7);
+    cout << b << " (Constructor cu 2 parametri)\n";
     Array<int> c(a);
-    cout << a << endl;
-    a = b;
-    cout << a << endl;
-    cout << c[1] << endl;
-    c[1] = 1;
-    cout << c[1] << endl;
+    cout << c << " (Copy-constructor)\n";
+    c = a - b;
+    cout << c << " (Redefinirea operatorului '-' si redefinirea operatorului '=')\n";
+    c = a + b;
+    cout << c << " (Redefinirea operatorului '+')\n";
+    cout << a.Len() << " (Lungimea lui 'a')\n";
+    cout << a[1] << " (a[1] (read) )\n";
+    a[1] = 12;
+    cout << a << " (Array-ul 'a' dupa modificarea elementului de pe a doua pozitie, adica a[1] (write) )\n";
     Increment<int> inc(2);
-    c.Transform(inc);
-    cout << c << endl;
-    //c =  a + b;
-    cout << c << endl;*/
-    /*Pair1 p1(2, 3);
-    Pair1 p2(5, 6);
-    cout << p1 << p2;
-    p1 = p2;
-    cout << p1;*/
-    //p2.t = 15;
-    //p2.u = 16;
-    //cout << p1;
-    //p1 = p2;
-    //cout << p1;
-    /*Array<Pair1> d(1, p);
-    a.Merge(b);
-    cout << d;*/
-
-    /*
-    Array<int> a(5, 1);
-    Array<int> b(5, 2);
-    Pair1 p1(2, 3);
-    Array<Pair1> c(5, p1);
-    c = a.Merge(b);
-    cout << c;*/
-
-    Array<int> a(5, 1);
-    Array<double> b(5, 2.5);
-    Pair<int, double> p1(2, 3.2);
-    Array<Pair<int, double> > c(5, p1);
-    c = a.Merge(b);
-    cout << c;
+    a.Transform(inc);
+    cout << a << " (Array-ul 'a' dupa ce fiecare element al lui a fost incrementat cu 2)";
     return 0;
 }
